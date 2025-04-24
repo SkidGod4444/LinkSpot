@@ -13,7 +13,10 @@
       "bundleIdentifier": "com.saidevdhal.mvp",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
-      }
+      },
+      "entitlements": {
+      "com.apple.developer.networking.wifi-info": true
+    }
     },
     "android": {
       "adaptiveIcon": {
@@ -37,7 +40,15 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      [
+        "expo-location",
+        {
+          "isAndroidBackgroundLocationEnabled": true,
+          "isIosBackgroundLocationEnabled": true
+        }
+      ],
+
     ],
     "experiments": {
       "typedRoutes": true

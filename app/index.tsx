@@ -1,15 +1,16 @@
-import { Text, View } from "react-native";
+import { Button, Text, View } from "react-native";
+import * as Speech from 'expo-speech';
 
 export default function Index() {
+  const speak = () => {
+    const thingToSay = 'Fuck off, Good night.';
+    Speech.speak(thingToSay);
+  };
+
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text className="text-red-500">Edit app/index.tsx to edit this screen.</Text>
+    <View className="flex-1 items-center justify-center">
+      <Text className="text-red-500">Fuck ChatGPT!</Text>
+      <Button title="Press to ASK AI" onPress={speak} />
     </View>
   );
 }
