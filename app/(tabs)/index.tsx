@@ -1,5 +1,6 @@
 import { Button, Text, View } from "react-native";
 import * as Speech from 'expo-speech';
+import { Link } from "expo-router";
 
 
 export default function Index() {
@@ -13,6 +14,12 @@ export default function Index() {
     <View className="flex-1 items-center justify-center">
       <Text className="text-red-500 font-lato-bold text-2xl">Fuck ChatGPT!</Text>
       <Button title="Press to ASK AI" onPress={speak} />
+        <Link href="/auth">
+          <Text>Auth</Text>
+        </Link>
+        <Link href="/onboarding">
+          <Text>Onboarding</Text>
+        </Link>
     </View>
   );
 }
