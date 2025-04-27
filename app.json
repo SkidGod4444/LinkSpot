@@ -48,7 +48,12 @@
           "isIosBackgroundLocationEnabled": true
         }
       ],
-
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/Lato-Regular.ttf", "./assets/fonts/Lato-Bold.ttf", "./assets/fonts/Lato-Italic.ttf", "./assets/fonts/Lato-BoldItalic.ttf"]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
