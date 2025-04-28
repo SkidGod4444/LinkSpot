@@ -1,22 +1,24 @@
-import {
-  View,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BlurFade } from "@/components/anim/blur-fade";
 import { TypingAnimation } from "@/components/anim/type-writer";
+import Modal from "@/components/ui/modal";
 
 export default function OnboardingPage() {
   const [time, setTime] = useState(10);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPermsModalOpen, setIsPermsModalOpen] = useState(false);
+
   useEffect(() => {
     const timer = setInterval(() => {
       if (time > 0) {
         setTime(time - 1);
       }
     }, 1000);
+    if (time === 0) {
+      setIsModalOpen(true);
+    }
     return () => clearInterval(timer);
   }, [time]);
 
@@ -45,6 +47,7 @@ export default function OnboardingPage() {
             <TouchableOpacity
               activeOpacity={0.8}
               className="flex-row btn-primary mt-5"
+              onPress={() => setIsModalOpen(true)}
             >
               <Text className="text-white font-lato-bold text-lg text-center">
                 Get Started
@@ -56,6 +59,11 @@ export default function OnboardingPage() {
           </BlurFade>
         </View>
       </SafeAreaView>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <View className="justify-center items-center w-full rounded-xl p-4 bg-white">
+          <Text>Modal</Text>
+        </View>
+      </Modal>
     </ImageBackground>
   );
 }

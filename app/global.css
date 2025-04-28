@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer components {
     .btn-primary {
         @apply shadow-lg shadow-neutral-600;
