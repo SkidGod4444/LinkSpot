@@ -53,11 +53,11 @@ export default function AuthPage() {
           <TouchableOpacity activeOpacity={0.8} className="btn-secondary mt-5">
             <View className="flex-row items-center justify-center">
               <Image
-                source={require("../assets/images/brands/apple-logo.png")}
+                source={require("../assets/images/brands/twitter-logo.png")}
                 className="w-6 h-6 mr-5"
               />
               <Text className="text-black font-lato-bold text-lg text-center">
-                Continue with Apple
+                Continue with Twitter
               </Text>
             </View>
           </TouchableOpacity>

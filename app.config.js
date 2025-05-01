@@ -25,6 +25,13 @@ export default ({ config }) => ({
   newArchEnabled: true,
   plugins: [
     'expo-localization',
+    [
+      "expo-secure-store",
+      {
+        configureAndroidBackup: true,
+        faceIDPermission: "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
+      }
+    ],
     'expo-router',
     [
       'expo-splash-screen',
@@ -66,6 +73,9 @@ export default ({ config }) => ({
     },
     entitlements: {
       'com.apple.developer.networking.wifi-info': true,
+    },
+    config: {
+      usesNonExemptEncryption: false,
     },
   },
   android: {
