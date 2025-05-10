@@ -29,7 +29,19 @@ export default function AuthPage() {
       await account.createEmailPasswordSession(email, password);
       const user = await account.get();
       setLoggedInUser(user);
-      router.replace('/onboarding');
+      
+      try {
+        const prefs = await account.getPrefs();
+        console.log('User preferences:', prefs);
+        if (prefs.isOnboarded === "false") {
+          router.replace('/onboarding');
+        } else {
+          router.replace('/(tabs)');
+        }
+      } catch (prefError) {
+        console.log('Failed to get preferences:', prefError);
+      }
+      router.replace('/(tabs)');
     } catch (err: any) {
       setError(err.message || 'Failed to login');
     } finally {
@@ -43,6 +55,15 @@ export default function AuthPage() {
       setError('');
       await account.create(ID.unique(), email, password, name);
       await login(email, password);
+      
+      // Update user preferences
+      try {
+        const response = await account.updatePrefs({defaultTheme: 'light', isOnboarded: false});
+        console.log('Preferences updated:', response);
+      } catch (prefError) {
+        console.log('Failed to update preferences:', prefError);
+      }
+      
       router.replace('/onboarding');
     } catch (err: any) {
       setError(err.message || 'Failed to register');

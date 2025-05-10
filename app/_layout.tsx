@@ -36,14 +36,28 @@ export default function RootLayout() {
         console.log(session.provider);
         console.log(session.providerUid);
         console.log(session.providerAccessToken);
-        router.replace("/onboarding");
+        
+        // Check if token is expired and needs refresh
         if (parseInt(session.providerAccessTokenExpiry) < Date.now() || session.providerAccessTokenExpiry === null) {
-          const promise = account.updateSession(session.$id);
-          promise.then(function (response) {
-            console.log(response); // Success
-          }, function (error) {
-            console.log(error); // Failure
-        });
+          try {
+            const response = await account.updateSession(session.$id);
+            console.log("Session updated:", response);
+          } catch (refreshError) {
+            console.log("Failed to refresh session:", refreshError);
+          }
+        }
+        
+        try {
+          const prefs = await account.getPrefs();
+          console.log('User preferences:', prefs);
+          if (prefs.isOnboarded === "false") {
+            router.replace('/onboarding');
+          } else {
+            router.replace('/(tabs)');
+          }
+        } catch (prefError) {
+          console.log('Failed to get preferences:', prefError);
+          router.replace('/(tabs)');
         }
       } catch (error) {
         console.log("No active session:", error);

@@ -1,14 +1,22 @@
-import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
+import { View, Text, ImageBackground, TouchableOpacity, TextInput } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BlurFade } from "@/components/anim/blur-fade";
 import { TypingAnimation } from "@/components/anim/type-writer";
-import Modal from "@/components/ui/modal";
+import Modal from "react-native-modal";
+import { account } from "@/lib/auth";
+import { router } from "expo-router";
+
 
 export default function OnboardingPage() {
   const [time, setTime] = useState(10);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPermsModalOpen, setIsPermsModalOpen] = useState(false);
+
+  const handleCompleteSetup = async () => {
+    setIsModalOpen(false);
+    await account.updatePrefs({isOnboarded: true});
+    router.replace('/(tabs)');
+  }
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -48,6 +56,7 @@ export default function OnboardingPage() {
               activeOpacity={0.8}
               className="flex-row btn-primary mt-5"
               onPress={() => setIsModalOpen(true)}
+              // onPress={handlePresentModalPress}
             >
               <Text className="text-white font-lato-bold text-lg text-center">
                 Get Started
@@ -57,13 +66,74 @@ export default function OnboardingPage() {
               </Text>
             </TouchableOpacity>
           </BlurFade>
-        </View>
-      </SafeAreaView>
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <View className="justify-center items-center w-full rounded-xl p-4 bg-white">
-          <Text>Modal</Text>
+
+          <View>
+          <Modal
+        isVisible={isModalOpen}
+        hasBackdrop={true}
+        backdropTransitionOutTiming={600}
+        className="flex-1 items-center justify-center"
+      >
+        <View className="bg-white/90 p-5 w-5/6 rounded-2xl backdrop-blur-md">
+          <Text className="text-black text-lg font-lato-bold mb-4">Complete Onboarding</Text>
+          
+          <View className="mb-4">
+            <Text className="text-black font-lato-regular mb-2">Username</Text>
+            <TextInput
+              className="bg-white/70 text-black p-3 rounded-lg font-lato-regular"
+              placeholder="Choose a username"
+              placeholderTextColor="rgba(0,0,0,0.5)"
+            />
+          </View>
+          
+          <View className="mb-4">
+            <Text className="text-black font-lato-regular mb-2">Date of Birth</Text>
+            <TextInput
+              className="bg-white/70 text-black p-3 rounded-lg font-lato-regular"
+              placeholder="MM/DD/YYYY"
+              placeholderTextColor="rgba(0,0,0,0.5)"
+            />
+          </View>
+
+          <View className="mb-4">
+            <Text className="text-black font-lato-regular mb-2">Gender</Text>
+            <TextInput
+              className="bg-white/70 text-black p-3 rounded-lg font-lato-regular"
+              placeholder="Male, Female, Other"
+              placeholderTextColor="rgba(0,0,0,0.5)"
+            />
+          </View>
+
+          <View className="mb-4">
+            <Text className="text-black font-lato-regular mb-2">Location</Text>
+            <TextInput
+              className="bg-white/70 text-black p-3 rounded-lg font-lato-regular"
+              placeholder="Enter your location"
+              placeholderTextColor="rgba(0,0,0,0.5)"
+            />
+          </View>
+          
+          <View className="mb-4">
+            <Text className="text-black font-lato-regular mb-2">Interests</Text>
+            <TextInput
+              className="bg-white/70 text-black p-3 rounded-lg font-lato-regular"
+              placeholder="Music, Sports, Technology, etc."
+              placeholderTextColor="rgba(0,0,0,0.5)"
+            />
+          </View>
+          
+          <TouchableOpacity
+            className="bg-black py-3 rounded-lg mt-2"
+            activeOpacity={0.8}
+            onPress={handleCompleteSetup}
+          >
+            <Text className="text-white font-lato-bold text-center">Complete Setup</Text>
+          </TouchableOpacity>
         </View>
       </Modal>
+          </View>
+        </View>
+      </SafeAreaView>
     </ImageBackground>
   );
 }
