@@ -1,8 +1,6 @@
 import { Button, Text, View } from "react-native";
 import * as Speech from "expo-speech";
 import { Link, router } from "expo-router";
-import { authClient } from "@/lib/auth/client";
-import { useEffect } from "react";
 export default function Index() {
   const speak = () => {
     const thingToSay = "Fuck off, Good night.";

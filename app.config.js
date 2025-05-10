@@ -23,8 +23,10 @@ export default ({ config }) => ({
   scheme: 'myapp',
   userInterfaceStyle: 'automatic',
   newArchEnabled: true,
+  deepLinking: true,
   plugins: [
     'expo-localization',
+    'expo-quick-actions',
     [
       "expo-secure-store",
       {
