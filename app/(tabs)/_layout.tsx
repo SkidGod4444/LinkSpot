@@ -1,22 +1,32 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import { View, Platform, Pressable } from "react-native";
+import { View, Platform, Pressable, ImageSourcePropType, Image } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
+import { icons } from "@/constants";
 
 const TabBarIcons = ({
   focused,
   icon,
-  title,
+  imageUrl,
   size,
 }: {
   focused: boolean;
-  icon: any;
-  title: string;
+  icon?: any;
+  imageUrl?: ImageSourcePropType;
   size: number;
 }) => {
   return (
-    <View className="flex-1 flex flex-col justify-center items-center">
-      <Entypo name={icon} size={size} color={focused ? "#000" : "#888"} />
+    <View className={`justify-center items-center w-12 h-12 ${focused && "rounded-full bg-white/20"}`}>
+      {imageUrl ? (
+        <Image
+        source={imageUrl}
+        tintColor={focused ? "#fff" : "#888"}
+        resizeMode="contain"
+        className="w-7 h-7"
+      />
+      ) : (
+        <Entypo name={icon} size={size} color={focused ? "#fff" : "#888"} />
+      )}
     </View>
   );
 };
@@ -34,30 +44,32 @@ const NoEffectTabButton = ({ children, onPress }: any) => {
 };
 
 export default function TabsLayout() {
-  return (
+  return  (
     <Tabs
+      initialRouteName="index"
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
         tabBarStyle: {
-          borderTopWidth: 0.5,
-          height: 64,
-          paddingBottom: 5,
+          height: 60,
+          paddingBottom: 0,
+          backgroundColor: "#2c2b2b",
           paddingTop: 0,
+          borderRadius: 50,
+          marginBottom: 25,
+          marginHorizontal: 25,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexDirection: "row",
+          position: "absolute",
           ...Platform.select({
             ios: {
               shadowColor: "#000",
               shadowOffset: { width: 0, height: -2 },
               shadowOpacity: 0.1,
               shadowRadius: 2,
-              borderTopLeftRadius: 35,
-              borderTopRightRadius: 35,
               overflow: "hidden",
-            },
-            android: {
-              borderTopLeftRadius: 35,
-              borderTopRightRadius: 35,
-              backgroundColor: "#fff",
             },
           }),
         },
@@ -69,7 +81,7 @@ export default function TabsLayout() {
           title: "Home",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabBarIcons focused={focused} icon="home" title="Home" size={24} />
+            <TabBarIcons focused={focused} imageUrl={icons.home} size={24} />
           ),
           tabBarButton: (props) => <NoEffectTabButton {...props} />,
         }}
@@ -82,8 +94,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ focused }) => (
             <TabBarIcons
               focused={focused}
-              icon="globe"
-              title="Explore"
+              imageUrl={icons.map}
               size={24}
             />
           ),
@@ -96,8 +107,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ focused }) => (
             <TabBarIcons
               focused={focused}
-              icon="chat"
-              title="Chats"
+              imageUrl={icons.chat}
               size={24}
             />
           ),
@@ -110,8 +120,7 @@ export default function TabsLayout() {
           tabBarIcon: ({ focused }) => (
             <TabBarIcons
               focused={focused}
-              icon="user"
-              title="Profile"
+              imageUrl={icons.profile}
               size={24}
             />
           ),

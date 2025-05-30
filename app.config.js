@@ -8,9 +8,9 @@ const getUniqueIdentifier = () => {
 };
 
 const getAppName = () => {
-  if (IS_DEV) return 'MVP (Dev)';
-  if (IS_PREVIEW) return 'MVP (Preview)';
-  return 'MVP';
+  if (IS_DEV) return 'LinkSpot (Dev)';
+  if (IS_PREVIEW) return 'LinkSpot (Preview)';
+  return 'LinkSpot';
 };
 
 export default ({ config }) => ({
@@ -38,10 +38,10 @@ export default ({ config }) => ({
     [
       'expo-splash-screen',
       {
-        image: './assets/images/splash-icon.png',
+        image: './assets/images/icon.png',
         imageWidth: 200,
         resizeMode: 'contain',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#000000',
       },
     ],
     [
@@ -84,8 +84,8 @@ export default ({ config }) => ({
     ...config.android,
     package: getUniqueIdentifier(),
     adaptiveIcon: {
-      foregroundImage: './assets/images/adaptive-icon.png',
-      backgroundColor: '#ffffff',
+      foregroundImage: './assets/images/icon.png',
+      backgroundColor: '#000000',
     },
   },
   web: {

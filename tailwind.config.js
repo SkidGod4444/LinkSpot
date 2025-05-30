@@ -15,4 +15,10 @@ module.exports = {
     },
   },
   plugins: [],
+  compilerOptions: {
+    strict: true,
+    paths: {
+      "@/*": ["./*"],
+    },
+  },
 }

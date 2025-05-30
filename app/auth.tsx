@@ -29,18 +29,6 @@ export default function AuthPage() {
       await account.createEmailPasswordSession(email, password);
       const user = await account.get();
       setLoggedInUser(user);
-      
-      try {
-        const prefs = await account.getPrefs();
-        console.log('User preferences:', prefs);
-        if (prefs.isOnboarded === "false") {
-          router.replace('/onboarding');
-        } else {
-          router.replace('/(tabs)');
-        }
-      } catch (prefError) {
-        console.log('Failed to get preferences:', prefError);
-      }
       router.replace('/(tabs)');
     } catch (err: any) {
       setError(err.message || 'Failed to login');
@@ -95,8 +83,9 @@ export default function AuthPage() {
 
   return (
     <ImageBackground
-      source={require("../assets/images/onboarding.bg.png")}
+      source={require("../assets/images/bg.png")}
       className="flex-1"
+      blurRadius={4}
     >
       <SafeAreaView className="flex-1">
         <KeyboardAvoidingView
@@ -106,7 +95,7 @@ export default function AuthPage() {
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View className="flex-1 justify-start items-start mx-10 px-2 mt-10">
               <Text className="text-4xl font-lato-bold-italic text-white">
-                hi, this is dime.
+                hi, this is linkspot.
               </Text>
               <Text className="text-xl font-lato-italic text-white mt-8">
                 One single app for all your social media needs. Get connected with

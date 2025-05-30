@@ -3,12 +3,15 @@ import "./global.css";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
-import { router } from "expo-router";
-import { account } from "@/lib/auth";
 import * as QuickActions from "expo-quick-actions";
 import { Platform } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { AuthProvider, useAuth } from "@/contexts/auth.context";
+import { RouteProvider } from "@/contexts/routes.context";
 
 SplashScreen.preventAutoHideAsync();
+
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     "Lato-Regular": require("../assets/fonts/Lato-Regular.ttf"),
@@ -20,60 +23,39 @@ export default function RootLayout() {
   useEffect(() => {
     QuickActions.setItems([
       {
-         "title": "Wait! Don't delete me!",
-         "subtitle": "We're here to help",
-         icon: Platform.OS === "ios" ? "symbol:person.crop.circle.badge.questionmark" : undefined,
-         id: "0",
-         params: { href: "/help" },
+        "title": "Wait! Don't delete me!",
+        "subtitle": "We're here to help",
+        icon: Platform.OS === "ios" ? "symbol:person.crop.circle.badge.questionmark" : undefined,
+        id: "0",
+        params: { href: "/help" },
       },
     ]);
   }, []);
-  
-  useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const session = await account.getSession('current');
-        console.log(session.provider);
-        console.log(session.providerUid);
-        console.log(session.providerAccessToken);
-        
-        // Check if token is expired and needs refresh
-        if (parseInt(session.providerAccessTokenExpiry) < Date.now() || session.providerAccessTokenExpiry === null) {
-          try {
-            const response = await account.updateSession(session.$id);
-            console.log("Session updated:", response);
-          } catch (refreshError) {
-            console.log("Failed to refresh session:", refreshError);
-          }
-        }
-        
-        try {
-          const prefs = await account.getPrefs();
-          console.log('User preferences:', prefs);
-          if (prefs.isOnboarded === "false") {
-            router.replace('/onboarding');
-          } else {
-            router.replace('/(tabs)');
-          }
-        } catch (prefError) {
-          console.log('Failed to get preferences:', prefError);
-          router.replace('/(tabs)');
-        }
-      } catch (error) {
-        console.log("No active session:", error);
-        router.replace("/auth");
-      }
-    };
-    
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
-      checkSession();
-    }
-  }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
+  return (
+    <AuthProvider>
+      <AppContent fontsLoaded={fontsLoaded} />
+    </AuthProvider>
+  );
+}
+
+function AppContent({ fontsLoaded }: { fontsLoaded: boolean }) {
+  const { loading } = useAuth();
+
+  useEffect(() => {
+    if (fontsLoaded && !loading) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, loading]);
+
+  if (!fontsLoaded || loading) {
     return null;
   }
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <RouteProvider>
+      <StatusBar style="light" />
+      <Stack screenOptions={{ headerShown: false }} />
+    </RouteProvider>
+  );
 }

@@ -32,8 +32,9 @@ export default function OnboardingPage() {
 
   return (
     <ImageBackground
-      source={require("../assets/images/onboarding.bg.png")}
+      source={require("../assets/images/bg.png")}
       className="flex-1"
+      blurRadius={4}
     >
       <SafeAreaView className="flex-1">
         <View className="flex-1 justify-center items-center px-4 mt-60">
@@ -71,8 +72,11 @@ export default function OnboardingPage() {
           <Modal
         isVisible={isModalOpen}
         hasBackdrop={true}
+        backdropOpacity={0.2}
+        backdropColor="black"
+        onBackdropPress={() => setIsModalOpen(false)}
         backdropTransitionOutTiming={600}
-        className="flex-1 items-center justify-center"
+        className="flex-1 z-[500] items-center justify-center"
       >
         <View className="bg-white/90 p-5 w-5/6 rounded-2xl backdrop-blur-md">
           <Text className="text-black text-lg font-lato-bold mb-4">Complete Onboarding</Text>
