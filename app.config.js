@@ -1,5 +1,8 @@
 const IS_DEV = process.env.APP_VARIANT === 'development';
 const IS_PREVIEW = process.env.APP_VARIANT === 'preview';
+const ORIGIN = IS_DEV
+  ? 'http://localhost:3001'
+  : process.env.ORIGIN;
 
 const getUniqueIdentifier = () => {
   if (IS_DEV) return 'com.saidevdhal.mvp.dev';
@@ -34,7 +37,12 @@ export default ({ config }) => ({
         faceIDPermission: "Allow $(PRODUCT_NAME) to access your Face ID biometric data."
       }
     ],
-    'expo-router',
+    [
+      'expo-router', 
+      {
+        origin: ORIGIN
+      }
+    ],
     [
       'expo-splash-screen',
       {
@@ -87,6 +95,20 @@ export default ({ config }) => ({
       foregroundImage: './assets/images/icon.png',
       backgroundColor: '#000000',
     },
+    intentFilters: [
+        {
+          action: "VIEW",
+          autoVerify: true,
+          data: [
+            {
+              scheme: "https",
+              host: "*.webapp.io",
+              pathPrefix: "/records"
+            }
+          ],
+          category: ["BROWSABLE", "DEFAULT"]
+        }
+      ]
   },
   web: {
     ...config.web,

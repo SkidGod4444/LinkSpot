@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, ImageBackground, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
-import { account } from "@/lib/auth"; // Ensure this points to the correct auth module
-import { ID, Models } from "react-native-appwrite";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
+import { useAuth } from "@/contexts/auth.context";
+import { StatusBar } from "expo-status-bar";
 
 export default function AuthPage() {
-  const [loggedInUser, setLoggedInUser] = useState<Models.User<Models.Preferences> | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confPassword, setConfPassword] = useState('');
   const [name, setName] = useState('');
-  const [isLogin, setIsLogin] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   const [error, setError] = useState('');
-
+  const { login, register, loading, loggedInUser } = useAuth();
 
   useEffect(() => {
     if (loggedInUser) {
@@ -22,42 +20,7 @@ export default function AuthPage() {
     }
   }, [loggedInUser]);
 
-  async function login(email: string, password: string) {
-    try {
-      setLoading(true);
-      setError('');
-      await account.createEmailPasswordSession(email, password);
-      const user = await account.get();
-      setLoggedInUser(user);
-      router.replace('/(tabs)');
-    } catch (err: any) {
-      setError(err.message || 'Failed to login');
-    } finally {
-      setLoading(false);
-    }
-  }
 
-  async function register(email: string, password: string, name: string) {
-    try {
-      setLoading(true);
-      setError('');
-      await account.create(ID.unique(), email, password, name);
-      await login(email, password);
-      
-      // Update user preferences
-      try {
-        const response = await account.updatePrefs({defaultTheme: 'light', isOnboarded: false});
-        console.log('Preferences updated:', response);
-      } catch (prefError) {
-        console.log('Failed to update preferences:', prefError);
-      }
-      
-      router.replace('/onboarding');
-    } catch (err: any) {
-      setError(err.message || 'Failed to register');
-      setLoading(false);
-    }
-  }
 
   const handleSubmit = () => {
     if (isLogin) {
@@ -87,6 +50,7 @@ export default function AuthPage() {
       className="flex-1"
       blurRadius={4}
     >
+      <StatusBar style="light" />
       <SafeAreaView className="flex-1">
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -108,9 +72,6 @@ export default function AuthPage() {
             </View>
 
             <View className="mx-10 mb-10 bg-white/10 rounded-2xl p-4">
-              {/* <Text className="text-2xl font-lato-bold text-white mb-6">
-                {isLogin ? 'Sign In' : 'Create Account'}
-              </Text> */}
               
               {!isLogin && (
                 <View className="mb-4">

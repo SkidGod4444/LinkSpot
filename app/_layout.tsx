@@ -9,6 +9,7 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { AuthProvider, useAuth } from "@/contexts/auth.context";
 import { RouteProvider } from "@/contexts/routes.context";
+import { PermsProvider } from "@/contexts/perms.context";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -53,9 +54,11 @@ function AppContent({ fontsLoaded }: { fontsLoaded: boolean }) {
   }
 
   return (
-    <RouteProvider>
-      <StatusBar style="light" />
+    <PermsProvider>
+      <RouteProvider>
+      <StatusBar style="auto" />
       <Stack screenOptions={{ headerShown: false }} />
     </RouteProvider>
+    </PermsProvider>
   );
 }

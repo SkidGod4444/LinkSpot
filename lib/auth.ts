@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { Client, Account } from "react-native-appwrite";
 
 const client = new Client()
@@ -5,14 +6,6 @@ const client = new Client()
     .setProject("6816bfb100026bf628c7");                 // Your project ID
 
 const account = new Account(client);
-
-const logoutUser = async () => {
-    try {
-      await account.deleteSession('current')
-    } catch (error) {
-      console.error(error)
-    }
-  }
 
 const getUser = async () => {
     try {
@@ -22,4 +15,4 @@ const getUser = async () => {
     }
   }
 
-export { account, logoutUser, getUser };
+export { account, getUser };

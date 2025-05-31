@@ -102,8 +102,24 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="ai"
+        options={{
+          tabBarStyle: { display: "none" }, // Hide tab bar for AI screen
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcons
+              focused={focused}
+              imageUrl={icons.ai}
+              size={24}
+            />
+          ),
+          tabBarButton: (props) => <NoEffectTabButton {...props} />,
+        }}
+      />
+      <Tabs.Screen
         name="chats"
         options={{
+          tabBarStyle: { display: "none" }, // Hide tab bar for Chats screen
           tabBarIcon: ({ focused }) => (
             <TabBarIcons
               focused={focused}

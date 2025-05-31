@@ -6,6 +6,7 @@ import { TypingAnimation } from "@/components/anim/type-writer";
 import Modal from "react-native-modal";
 import { account } from "@/lib/auth";
 import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 
 
 export default function OnboardingPage() {
@@ -36,6 +37,7 @@ export default function OnboardingPage() {
       className="flex-1"
       blurRadius={4}
     >
+      <StatusBar style="light" />
       <SafeAreaView className="flex-1">
         <View className="flex-1 justify-center items-center px-4 mt-60">
           <TypingAnimation

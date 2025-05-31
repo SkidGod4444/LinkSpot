@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useContext } from 'react';
 import { usePathname, useRouter } from 'expo-router';
 import { useAuth } from './auth.context';
 import { account } from '@/lib/auth';
+import { usePerms } from './perms.context';
 
 interface RouteGuardContextValue {
   isProtectedRoute: boolean;
@@ -16,11 +17,17 @@ export const RouteProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const router = useRouter();
   const { isAuthenticated, loading } = useAuth();
+  const { isOnline } = usePerms();
 
   const isProtectedRoute = ProtectedRoutes.includes(pathname);
   const isCheckingAuth = loading || (isProtectedRoute && !isAuthenticated);
 
   useEffect(() => {
+    if (!isOnline) {
+      router.replace('/offline');
+      return;
+    }
+
     if (!isProtectedRoute || loading) return;
 
     if (!isAuthenticated) {
@@ -43,7 +50,7 @@ export const RouteProvider = ({ children }: { children: React.ReactNode }) => {
           console.error('Error fetching user preferences:', err);
         });
     }
-  }, [pathname, isAuthenticated, loading, router, isProtectedRoute]);
+  }, [pathname, isAuthenticated, loading, router, isProtectedRoute, isOnline]);
 
   return (
     <RouteGuardContext.Provider value={{ isProtectedRoute, isCheckingAuth }}>

@@ -1,8 +1,11 @@
 import { Button, Text, View } from "react-native";
 import * as Speech from "expo-speech";
 import { Link } from "expo-router";
-import { logoutUser } from "@/lib/auth";
+import { useAuth } from "@/contexts/auth.context";
+
 export default function Index() {
+  const { logout } = useAuth();
+
   const speak = () => {
     const thingToSay = "Fuck off, Good night.";
     Speech.speak(thingToSay);
@@ -20,7 +23,10 @@ export default function Index() {
       <Link href="/onboarding">
         <Text>Onboarding</Text>
       </Link>
-      <Button title="Logout" onPress={logoutUser} />
+      <Link href="/offline">
+        <Text>Offline</Text>
+      </Link>
+      <Button title="Logout" onPress={logout} />
     </View>
   );
 }
