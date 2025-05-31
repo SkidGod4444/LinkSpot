@@ -1,0 +1,14 @@
+[
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "linkspot_android",
+        "package_name": "com.saidevdhal.mvp",
+        "sha256_cert_fingerprints": [
+          "AF:51:AD:23:EA:E3:26:C9:33:5F:8A:E7:20:98:9F:49:6A:2E:1D:EC:DF:C1:49:45:FF:7E:8C:E0:86:24:11:51",
+          "5F:FF:63:DE:1A:F3:18:D9:64:97:8A:B1:51:CE:07:5D:8B:3D:B4:D4:36:DC:0C:96:B3:FE:31:EB:05:4B:B0:BE"
+        ]
+      }
+    }
+  ]
+  
