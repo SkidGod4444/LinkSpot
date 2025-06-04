@@ -5,5 +5,4 @@ import chat from "@/assets/icons/chat.png";
 import ai from "@/assets/icons/ai.png";
 import redCross from "@/assets/icons/rcross.png";
 
-
 export const icons = { map, profile, home, chat, ai, redCross };

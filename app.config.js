@@ -1,7 +1,8 @@
 const IS_DEV = process.env.APP_VARIANT === 'development';
 const IS_PREVIEW = process.env.APP_VARIANT === 'preview';
+const LOCAL_IP = 'http://192.168.0.101:3001'; // Replace with your actual machine IP if different
 const ORIGIN = IS_DEV
-  ? 'http://localhost:3001'
+  ? LOCAL_IP
   : process.env.ORIGIN;
 
 const getUniqueIdentifier = () => {
@@ -24,7 +25,7 @@ export default ({ config }) => ({
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'myapp',
-  userInterfaceStyle: 'automatic',
+  userInterfaceStyle: 'dark',
   newArchEnabled: true,
   deepLinking: true,
   plugins: [
@@ -113,10 +114,12 @@ export default ({ config }) => ({
   web: {
     ...config.web,
     bundler: 'metro',
-    output: 'static',
+    output: 'server',
     favicon: './assets/images/favicon.png',
   },
   extra: {
+    APP_VARIANT: IS_DEV ? "development" : "preview",
+    ORIGIN: ORIGIN,
     router: {
       origin: false,
     },

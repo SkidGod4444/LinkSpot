@@ -1,6 +1,12 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import { View, Platform, Pressable, ImageSourcePropType, Image } from "react-native";
+import {
+  View,
+  Platform,
+  Pressable,
+  ImageSourcePropType,
+  Image,
+} from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
 import { icons } from "@/constants";
 
@@ -16,14 +22,16 @@ const TabBarIcons = ({
   size: number;
 }) => {
   return (
-    <View className={`justify-center items-center w-12 h-12 ${focused && "rounded-full bg-white/20"}`}>
+    <View
+      className={`justify-center items-center w-12 h-12 ${focused && "rounded-full bg-white/20"}`}
+    >
       {imageUrl ? (
         <Image
-        source={imageUrl}
-        tintColor={focused ? "#fff" : "#888"}
-        resizeMode="contain"
-        className="w-7 h-7"
-      />
+          source={imageUrl}
+          tintColor={focused ? "#fff" : "#888"}
+          resizeMode="contain"
+          className="w-7 h-7"
+        />
       ) : (
         <Entypo name={icon} size={size} color={focused ? "#fff" : "#888"} />
       )}
@@ -44,7 +52,7 @@ const NoEffectTabButton = ({ children, onPress }: any) => {
 };
 
 export default function TabsLayout() {
-  return  (
+  return (
     <Tabs
       initialRouteName="index"
       screenOptions={{
@@ -92,11 +100,7 @@ export default function TabsLayout() {
           title: "Explore",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabBarIcons
-              focused={focused}
-              imageUrl={icons.map}
-              size={24}
-            />
+            <TabBarIcons focused={focused} imageUrl={icons.map} size={24} />
           ),
           tabBarButton: (props) => <NoEffectTabButton {...props} />,
         }}
@@ -107,11 +111,7 @@ export default function TabsLayout() {
           tabBarStyle: { display: "none" }, // Hide tab bar for AI screen
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabBarIcons
-              focused={focused}
-              imageUrl={icons.ai}
-              size={24}
-            />
+            <TabBarIcons focused={focused} imageUrl={icons.ai} size={24} />
           ),
           tabBarButton: (props) => <NoEffectTabButton {...props} />,
         }}
@@ -121,11 +121,7 @@ export default function TabsLayout() {
         options={{
           tabBarStyle: { display: "none" }, // Hide tab bar for Chats screen
           tabBarIcon: ({ focused }) => (
-            <TabBarIcons
-              focused={focused}
-              imageUrl={icons.chat}
-              size={24}
-            />
+            <TabBarIcons focused={focused} imageUrl={icons.chat} size={24} />
           ),
           tabBarButton: (props) => <NoEffectTabButton {...props} />,
         }}
@@ -134,11 +130,7 @@ export default function TabsLayout() {
         name="profile"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabBarIcons
-              focused={focused}
-              imageUrl={icons.profile}
-              size={24}
-            />
+            <TabBarIcons focused={focused} imageUrl={icons.profile} size={24} />
           ),
           tabBarButton: (props) => <NoEffectTabButton {...props} />,
         }}

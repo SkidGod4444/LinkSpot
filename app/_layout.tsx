@@ -10,6 +10,7 @@ import React from "react";
 import { AuthProvider, useAuth } from "@/contexts/auth.context";
 import { RouteProvider } from "@/contexts/routes.context";
 import { PermsProvider } from "@/contexts/perms.context";
+import "@/lib/pollyfills";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -24,9 +25,12 @@ export default function RootLayout() {
   useEffect(() => {
     QuickActions.setItems([
       {
-        "title": "Wait! Don't delete me!",
-        "subtitle": "We're here to help",
-        icon: Platform.OS === "ios" ? "symbol:person.crop.circle.badge.questionmark" : undefined,
+        title: "Wait! Don't delete me!",
+        subtitle: "We're here to help",
+        icon:
+          Platform.OS === "ios"
+            ? "symbol:person.crop.circle.badge.questionmark"
+            : undefined,
         id: "0",
         params: { href: "/help" },
       },
@@ -56,9 +60,9 @@ function AppContent({ fontsLoaded }: { fontsLoaded: boolean }) {
   return (
     <PermsProvider>
       <RouteProvider>
-      <StatusBar style="auto" />
-      <Stack screenOptions={{ headerShown: false }} />
-    </RouteProvider>
+        <StatusBar style="auto" />
+        <Stack screenOptions={{ headerShown: false }} />
+      </RouteProvider>
     </PermsProvider>
   );
 }

@@ -1,17 +1,19 @@
-import React, { createContext, useEffect, useContext } from 'react';
-import { usePathname, useRouter } from 'expo-router';
-import { useAuth } from './auth.context';
-import { account } from '@/lib/auth';
-import { usePerms } from './perms.context';
+import React, { createContext, useEffect, useContext } from "react";
+import { usePathname, useRouter } from "expo-router";
+import { useAuth } from "./auth.context";
+import { account } from "@/lib/auth";
+import { usePerms } from "./perms.context";
 
 interface RouteGuardContextValue {
   isProtectedRoute: boolean;
   isCheckingAuth: boolean;
 }
 
-const RouteGuardContext = createContext<RouteGuardContextValue | undefined>(undefined);
+const RouteGuardContext = createContext<RouteGuardContextValue | undefined>(
+  undefined,
+);
 
-const ProtectedRoutes = ['/profile', '/explore', '/'];
+const ProtectedRoutes = ["/profile", "/explore", "/"];
 
 export const RouteProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
@@ -24,30 +26,31 @@ export const RouteProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (!isOnline) {
-      router.replace('/offline');
+      router.replace("/offline");
       return;
     }
 
     if (!isProtectedRoute || loading) return;
 
     if (!isAuthenticated) {
-      console.log('User not authenticated — redirecting to /auth');
-      router.replace('/auth');
+      console.log("User not authenticated — redirecting to /auth");
+      router.replace("/auth");
       return;
     }
 
     // Only check onboarding if user is authenticated and at root route
-    if (pathname === '/') {
-      account.getPrefs()
+    if (pathname === "/") {
+      account
+        .getPrefs()
         .then((prefs) => {
-          console.log('User preferences:', prefs);
-          if (prefs?.isOnboarded === 'false') {
-            console.log('User not onboarded — redirecting to /onboarding');
-            router.replace('/onboarding');
+          console.log("User preferences:", prefs);
+          if (prefs?.isOnboarded === "false") {
+            console.log("User not onboarded — redirecting to /onboarding");
+            router.replace("/onboarding");
           }
         })
         .catch((err) => {
-          console.error('Error fetching user preferences:', err);
+          console.error("Error fetching user preferences:", err);
         });
     }
   }, [pathname, isAuthenticated, loading, router, isProtectedRoute, isOnline]);
@@ -63,7 +66,7 @@ export const RouteProvider = ({ children }: { children: React.ReactNode }) => {
 export const useRouteGuard = () => {
   const context = useContext(RouteGuardContext);
   if (!context) {
-    throw new Error('useRouteGuard must be used within a RouteProvider');
+    throw new Error("useRouteGuard must be used within a RouteProvider");
   }
   return context;
 };
