@@ -18,6 +18,7 @@ const getAppName = () => {
   return 'LinkSpot';
 };
 
+
 export default ({ config }) => ({
   ...config,
   name: getAppName(),

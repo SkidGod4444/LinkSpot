@@ -4,7 +4,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import * as QuickActions from "expo-quick-actions";
-import { Platform, View, useColorScheme } from "react-native";
+import { Platform } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { AuthProvider, useAuth } from "@/contexts/auth.context";
@@ -48,11 +48,7 @@ export default function RootLayout() {
 
 function AppContent({ fontsLoaded }: { fontsLoaded: boolean }) {
   const { loading } = useAuth();
-  const { theme } = useTheme();
-  const systemColorScheme = useColorScheme();
-
-  const isDarkMode =
-    theme === "dark" || (theme === "system" && systemColorScheme === "dark");
+  const { theme, isDarkMode } = useTheme();
 
   useEffect(() => {
     if (fontsLoaded && !loading) {
@@ -64,18 +60,17 @@ function AppContent({ fontsLoaded }: { fontsLoaded: boolean }) {
     return null;
   }
 
+  console.log("Theme provider initialized with theme:", theme);
   return (
-    <ThemeProvider>
-      <View className={isDarkMode ? "dark flex-1" : "flex-1"}>
-        <LocalStoreProvider>
-          <PermsProvider>
-            <RouteProvider>
-              <StatusBar style={isDarkMode ? "light" : "dark"} />
-              <Stack screenOptions={{ headerShown: false }} />
-            </RouteProvider>
-          </PermsProvider>
-        </LocalStoreProvider>
-      </View>
-    </ThemeProvider>
+    <LocalStoreProvider>
+      <PermsProvider>
+        <RouteProvider>
+          <ThemeProvider>
+            <StatusBar style={isDarkMode ? "light" : "dark"} />
+            <Stack screenOptions={{ headerShown: false }} />
+          </ThemeProvider>
+        </RouteProvider>
+      </PermsProvider>
+    </LocalStoreProvider>
   );
 }

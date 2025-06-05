@@ -3,13 +3,9 @@ import React from "react";
 import { useTheme } from "@/contexts/theme.context";
 
 export default function ThemeToggler() {
-  const { theme, toggleTheme } = useTheme();
-
-  const getNextTheme = () => {
-    if (theme === "light") return "Dark";
-    if (theme === "dark") return "System";
-    return "Light";
-  };
+  const { isDarkMode, toggleTheme } = useTheme();
+  const nextTheme = isDarkMode ? "light" : "dark";
+  console.log("Next theme:", nextTheme);
 
   return (
     <View className="items-center justify-center">
@@ -18,7 +14,7 @@ export default function ThemeToggler() {
         className="px-4 py-2 rounded-lg bg-zinc-200 dark:bg-zinc-700"
       >
         <Text className="text-black dark:text-white">
-          Switch to {getNextTheme()} Mode
+          Switch to {nextTheme} mode
         </Text>
       </Pressable>
     </View>

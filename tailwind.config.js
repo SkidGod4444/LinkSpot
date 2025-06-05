@@ -3,14 +3,14 @@ module.exports = {
   // NOTE: Update this to include the paths to all of your component files.
   content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
-  darkMode: "class",
+  darkMode: "media",
   theme: {
     extend: {
       colors: {
-        primary: "#1E40AF",
-        secondary: "#FACC15",
+        primary: "#1D4ED8",
+        secondary: "#27272A",
         background: "#F9FAFB",
-        dark: "#0F172A",
+        dark: "#18181B",
         accent: "#10B981",
       },
       fontFamily: {

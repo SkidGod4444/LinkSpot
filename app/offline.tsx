@@ -1,12 +1,16 @@
 import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { colors, icons } from "@/constants";
+import { icons } from "@/constants";
 import { router } from "expo-router";
+import { useTheme } from "@/contexts/theme.context";
 
 export default function OfflinePage() {
+  const isDarkMode = useTheme();
   return (
-    <SafeAreaView className="flex-1 items-center justify-center">
+    <SafeAreaView
+      className={`flex items-center justify-center ${isDarkMode ? "bg-dark" : "bg-white"}`}
+    >
       <View className="flex-1 items-center justify-center px-6">
         <View className="bg-white/10 p-8 rounded-3xl items-center">
           <Image

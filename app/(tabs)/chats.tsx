@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import { chatRooms } from "@/utils/test.data";
 import { Link } from "expo-router";
 import { colors, icons, images } from "@/constants";
+import { useTheme } from "@/contexts/theme.context";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Chats() {
   const [refreshing, setRefreshing] = useState(false);
+  const { isDarkMode } = useTheme();
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -18,7 +20,9 @@ export default function Chats() {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: colors.background, flex: 1 }}>
+    <SafeAreaView
+      className={`flex items-center justify-center ${isDarkMode ? "bg-dark" : "bg-white"}`}
+    >
       <FlatList
         data={chatRooms}
         keyExtractor={(item) => item.id}
