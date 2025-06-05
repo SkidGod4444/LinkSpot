@@ -6,6 +6,13 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      colors: {
+        primary: "#1E40AF",
+        secondary: "#FACC15",
+        background: "#F9FAFB",
+        dark: "#0F172A",
+        accent: "#10B981",
+      },
       fontFamily: {
         'lato-regular': ['Lato-Regular'],
         'lato-bold': ['Lato-Bold'],

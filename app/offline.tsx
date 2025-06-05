@@ -1,12 +1,12 @@
 import { View, Text, Image, Pressable } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { icons } from "@/constants";
+import { colors, icons } from "@/constants";
 import { router } from "expo-router";
 
 export default function OfflinePage() {
   return (
-    <SafeAreaView className="flex-1 bg-black">
+    <SafeAreaView className="flex-1 items-center justify-center">
       <View className="flex-1 items-center justify-center px-6">
         <View className="bg-white/10 p-8 rounded-3xl items-center">
           <Image

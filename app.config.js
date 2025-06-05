@@ -1,3 +1,4 @@
+
 const IS_DEV = process.env.APP_VARIANT === 'development';
 const IS_PREVIEW = process.env.APP_VARIANT === 'preview';
 const LOCAL_IP = 'http://192.168.0.101:3001'; // Replace with your actual machine IP if different
@@ -25,7 +26,7 @@ export default ({ config }) => ({
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'myapp',
-  userInterfaceStyle: 'dark',
+  userInterfaceStyle: 'automatic',
   newArchEnabled: true,
   deepLinking: true,
   plugins: [
@@ -50,7 +51,7 @@ export default ({ config }) => ({
         image: './assets/images/icon.png',
         imageWidth: 200,
         resizeMode: 'contain',
-        backgroundColor: '#000000',
+        backgroundColor: "#121212",
       },
     ],
     [

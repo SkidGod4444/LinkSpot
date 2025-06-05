@@ -2,6 +2,8 @@ import { Button, Text, View } from "react-native";
 import * as Speech from "expo-speech";
 import { Link } from "expo-router";
 import { useAuth } from "@/contexts/auth.context";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { colors } from "@/constants";
 
 export default function Index() {
   const { logout } = useAuth();
@@ -12,7 +14,7 @@ export default function Index() {
   };
 
   return (
-    <View className="flex-1 items-center justify-center">
+    <SafeAreaView className="flex-1 items-center justify-center">
       <Text className="text-red-500 font-lato-bold text-2xl">
         Fuck ChatGPT!
       </Text>
@@ -27,6 +29,6 @@ export default function Index() {
         <Text>Offline</Text>
       </Link>
       <Button title="Logout" onPress={logout} />
-    </View>
+    </SafeAreaView>
   );
 }

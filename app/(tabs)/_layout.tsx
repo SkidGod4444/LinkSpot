@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
-import { icons } from "@/constants";
+import { colors, icons } from "@/constants";
 
 const TabBarIcons = ({
   focused,
@@ -61,7 +61,7 @@ export default function TabsLayout() {
         tabBarStyle: {
           height: 60,
           paddingBottom: 0,
-          backgroundColor: "#2c2b2b",
+          backgroundColor: colors.primary,
           paddingTop: 0,
           borderRadius: 50,
           marginBottom: 25,
@@ -71,6 +71,7 @@ export default function TabsLayout() {
           justifyContent: "space-between",
           flexDirection: "row",
           position: "absolute",
+          borderTopWidth: 0,
           ...Platform.select({
             ios: {
               shadowColor: "#000",

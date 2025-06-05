@@ -1,3 +1,4 @@
+import { colors } from "@/constants";
 import { generateAPIUrl } from "@/utils";
 import { useChat } from "@ai-sdk/react";
 import { fetch as expoFetch } from "expo/fetch";
@@ -15,6 +16,7 @@ export default function Ai() {
       }
     },
   });
+
   if (error)
     return (
       <ScrollView>
@@ -24,7 +26,7 @@ export default function Ai() {
     );
 
   return (
-    <SafeAreaView style={{ height: "100%" }}>
+    <SafeAreaView>
       <View
         style={{
           height: "95%",
