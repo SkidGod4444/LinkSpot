@@ -2,8 +2,7 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
-import help from "./routes/help";
-import chat from "./routes/chat";
+import chat from "./routes/ai/chat";
 
 export const runtime = "edge";
 const app = new Hono().basePath("/v1");
@@ -22,7 +21,6 @@ app.use(
 
 app.use(logger());
 
-app.route("/help", help);
 app.route("/ai/chat", chat);
 
 const GET = handle(app);

@@ -10,8 +10,9 @@ module.exports = {
         primary: "#1D4ED8",
         secondary: "#27272A",
         background: "#F9FAFB",
-        dark: "#18181B",
-        accent: "#10B981",
+        dark: "#121214",
+        'dark-accent': "#18181B",
+        accent: "#A1A1AA",
       },
       fontFamily: {
         'lato-regular': ['Lato-Regular'],

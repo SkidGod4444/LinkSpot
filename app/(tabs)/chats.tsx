@@ -1,14 +1,16 @@
-import { Text, FlatList, RefreshControl, View, Image } from "react-native";
+import { Text, FlatList, RefreshControl, View, Image, TouchableOpacity, TextInput } from "react-native";
 import React, { useState } from "react";
 import { chatRooms } from "@/utils/test.data";
 import { Link } from "expo-router";
 import { colors, icons, images } from "@/constants";
 import { useTheme } from "@/contexts/theme.context";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Chats() {
   const [refreshing, setRefreshing] = useState(false);
   const { isDarkMode } = useTheme();
+  const [searchQuery, setSearchQuery] = useState('');
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -23,6 +25,26 @@ export default function Chats() {
     <SafeAreaView
       className={`flex items-center justify-center ${isDarkMode ? "bg-dark" : "bg-white"}`}
     >
+      <View className="w-full px-4 py-3 border-b border-secondary bg-transparent flex-row items-center justify-between">
+  {/* Search bar */}
+  <View className={`flex-row items-center ${isDarkMode ? 'bg-secondary' : 'bg-gray-100'} rounded-xl px-4 py-3 mb-3`}>
+          <Ionicons name="search-outline" size={20} color={isDarkMode ? "#9CA3AF" : "#6B7280"} />
+          <TextInput
+            placeholder="Search Chats..."
+            placeholderTextColor={isDarkMode ? "#9CA3AF" : "#6B7280"}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            autoCapitalize="none"
+            autoCorrect={false}
+            returnKeyType="search"
+            keyboardType="default"
+            onSubmitEditing={() => {
+              console.log("Search submitted:", searchQuery);
+            }}
+            className={`flex-1 ml-3 ${isDarkMode ? "text-white" : "text-black"}`}
+          />
+        </View>
+</View>
       <FlatList
         data={chatRooms}
         keyExtractor={(item) => item.id}
@@ -87,18 +109,18 @@ function ChatItem({
       {/* Chat Details */}
       <View className="flex-1 justify-center">
         <View className="flex-row items-center mb-1">
-          <Text className="text-lg font-semibold text-white text-secondary">
+          <Text className="text-lg font-lato-regular text-white">
             {title}
           </Text>
           {isGroup && (
             <Image
               source={icons.group}
-              className="w-7 h-7 ml-2"
-              style={{ tintColor: colors.secondary }}
+              className="w-7 h-7 ml-2 text-primary"
+              tintColor={colors.accent}
             />
           )}
         </View>
-        <Text className="text-sm text-white">{description}</Text>
+        <Text className="text-sm text-accent">{description}</Text>
       </View>
     </View>
   );

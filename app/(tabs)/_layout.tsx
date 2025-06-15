@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Tabs } from "expo-router";
 import {
   View,
@@ -6,6 +6,7 @@ import {
   Pressable,
   ImageSourcePropType,
   Image,
+  Keyboard,
 } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
 import { colors, icons } from "@/constants";
@@ -23,17 +24,17 @@ const TabBarIcons = ({
 }) => {
   return (
     <View
-      className={`justify-center items-center w-12 h-12 ${focused && "rounded-full bg-white/20"}`}
+      className={`justify-center items-center w-11 h-11 ${focused && "rounded-xl bg-accent/30"}`}
     >
       {imageUrl ? (
         <Image
           source={imageUrl}
-          tintColor={focused ? "#fff" : "#888"}
+          tintColor={focused ? "white" : colors.accent}
           resizeMode="contain"
-          className="w-7 h-7"
+          className="w-8 h-8"
         />
       ) : (
-        <Entypo name={icon} size={size} color={focused ? "#fff" : "#888"} />
+        <Entypo name={icon} size={size} color={focused ? "white" : colors.accent} />
       )}
     </View>
   );
@@ -52,33 +53,54 @@ const NoEffectTabButton = ({ children, onPress }: any) => {
 };
 
 export default function TabsLayout() {
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener("keyboardDidShow", () => {
+      setKeyboardVisible(true);
+    });
+    const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+  
   return (
     <Tabs
       initialRouteName="index"
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
-        tabBarStyle: {
+        tabBarStyle: keyboardVisible ? { display: "none" } : {
           height: 60,
           paddingBottom: 0,
-          backgroundColor: colors.primary,
+          backgroundColor: colors["dark-accent"],
+          borderColor: colors.secondary,
+          borderWidth: 2,
           paddingTop: 0,
-          borderRadius: 50,
-          marginBottom: 25,
-          marginHorizontal: 25,
+          borderRadius: 20,
+          marginBottom: Platform.OS === "ios" ? 35 : 5,
+          marginHorizontal: 15,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           flexDirection: "row",
           position: "absolute",
-          borderTopWidth: 0,
+          borderTopWidth: 1,
           ...Platform.select({
             ios: {
               shadowColor: "#000",
               shadowOffset: { width: 0, height: -2 },
-              shadowOpacity: 0.1,
+              shadowOpacity: 0.5,
               shadowRadius: 2,
               overflow: "hidden",
+            },
+            android: {
+              elevation: 8,
             },
           }),
         },
@@ -96,9 +118,9 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="nearby"
         options={{
-          title: "Explore",
+          title: "Nearby",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabBarIcons focused={focused} imageUrl={icons.map} size={24} />
@@ -120,7 +142,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="chats"
         options={{
-          tabBarStyle: { display: "none" }, // Hide tab bar for Chats screen
+          title: "Chats",
           tabBarIcon: ({ focused }) => (
             <TabBarIcons focused={focused} imageUrl={icons.chat} size={24} />
           ),

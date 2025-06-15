@@ -6,6 +6,7 @@ const ORIGIN = IS_DEV
   ? LOCAL_IP
   : process.env.ORIGIN;
 
+
 const getUniqueIdentifier = () => {
   if (IS_DEV) return 'com.saidevdhal.mvp.dev';
   if (IS_PREVIEW) return 'com.saidevdhal.mvp.preview';
@@ -52,7 +53,7 @@ export default ({ config }) => ({
         image: './assets/images/icon.png',
         imageWidth: 200,
         resizeMode: 'contain',
-        backgroundColor: "#121212",
+        backgroundColor: "#000000",
       },
     ],
     [
@@ -60,6 +61,7 @@ export default ({ config }) => ({
       {
         isAndroidBackgroundLocationEnabled: true,
         isIosBackgroundLocationEnabled: true,
+        locationAlwaysAndWhenInUsePermission: "Allow $(PRODUCT_NAME) to use your location.",
       },
     ],
     [
@@ -81,13 +83,19 @@ export default ({ config }) => ({
     ...config.ios,
     bundleIdentifier: getUniqueIdentifier(),
     supportsTablet: true,
+    deploymentTarget: '12.0',
     infoPlist: {
       ITSAppUsesNonExemptEncryption: false,
+      UIBackgroundModes: ["location"],
+      NSLocationWhenInUseUsageDescription: 'Allow this app to use your location.',
+      NSLocationAlwaysUsageDescription: 'Allow this app to always access your location.',
+      NSLocationAlwaysAndWhenInUseUsageDescription: 'Allow this app to access your location.',
     },
     entitlements: {
       'com.apple.developer.networking.wifi-info': true,
     },
     config: {
+      googleMapsApiKey: process.env.GOOGLE_API_KEY,
       usesNonExemptEncryption: false,
     },
   },
@@ -98,6 +106,22 @@ export default ({ config }) => ({
       foregroundImage: './assets/images/icon.png',
       backgroundColor: '#000000',
     },
+    permissions: [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "FOREGROUND_SERVICE",
+        "FOREGROUND_SERVICE_LOCATION",
+        "FOREGROUND_SERVICE_NOTIFICATION",
+        "FOREGROUND_SERVICE_BACKGROUND_AUDIO",
+        "CAMERA",
+        "RECORD_AUDIO"
+      ],
+    config: {
+      googleMaps: {
+        apiKey: process.env.GOOGLE_API_KEY,
+        },
+      },
     intentFilters: [
         {
           action: "VIEW",

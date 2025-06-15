@@ -15,11 +15,16 @@
         "image": "latest"
       },
       "env": {
-        "APP_VARIANT": "development"
+        "APP_VARIANT": "development",
+        "GOOGLE_API_KEY": "AIzaSyCal7uTDlhyNFTQf_KK4hB5VZrhYQC82XA",
+        "EXPO_PUBLIC_GEOAPIFY_API_KEY": "adc6ac87d4c34e22b1878e19acf6ce76"
       }
     },
     "preview": {
       "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
       "env": {
         "APP_VARIANT": "preview"
       },
