@@ -1,4 +1,4 @@
-import { Text, FlatList, RefreshControl, View, Image, TouchableOpacity, TextInput } from "react-native";
+import { Text, FlatList, RefreshControl, View, Image, TextInput } from "react-native";
 import React, { useState } from "react";
 import { chatRooms } from "@/utils/test.data";
 import { Link } from "expo-router";
@@ -71,6 +71,7 @@ export default function Chats() {
                   title={item.title}
                   description={item.description}
                   isGroup={item.isGroup}
+                  image={item.image}
                 />
                 {/* <Image source={icons.chat} style={{ width: 20, height: 20 }} /> */}
               </View>
@@ -91,17 +92,19 @@ function ChatItem({
   title,
   description,
   isGroup,
+  image,
 }: {
   title: string;
   description: string;
   isGroup: boolean;
+  image?: string;
 }) {
   return (
     <View className="flex-row items-center">
       {/* Enlarged Avatar */}
       <View className="w-16 h-16 rounded-full overflow-hidden mr-4">
         <Image
-          source={images.fallbackPFP}
+          source={image ? { uri: image } : images.fallbackPFP}
           className="w-full h-full"
           style={{ resizeMode: "cover" }}
         />

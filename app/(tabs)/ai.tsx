@@ -8,9 +8,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Ai() {
   const { isDarkMode } = useTheme();
+  // const appi = generateAPIUrl("/v1/ai/chat");
+  // console.log("Chat API URL:", appi);
+  const apiUrl = `https://linkspot-api.devwtf.in/v1/ai/chat`;
+  console.log("Chat API URL:", apiUrl);
   const { messages, error, handleInputChange, input, handleSubmit } = useChat({
     fetch: expoFetch as unknown as typeof globalThis.fetch,
-    api: generateAPIUrl("/v1/ai/chat"),
+    api: apiUrl,
     onError: (error) => {
       console.error("Chat API error:", error);
       if (error instanceof Error) {

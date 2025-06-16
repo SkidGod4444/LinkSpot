@@ -4,10 +4,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@/contexts/theme.context";
 import { images } from "@/constants";
 import { Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
+import { useAuth } from "@/contexts/auth.context";
 
 export default function Profile() {
   const { isDarkMode } = useTheme();
+  const {logout} = useAuth();
   
   const menuItems = [
     { icon: "person-outline", title: "Edit Profile", color: "#FF6B6B" },
@@ -78,7 +79,7 @@ export default function Profile() {
           {menuItems.map((item, index) => (
             <TouchableOpacity
               key={index}
-              onPress={() => console.log(`${item.title} pressed`)}
+              onPress={logout}
               activeOpacity={0.9}
               className={`flex-row items-center p-4 mb-3 rounded-xl ${
                 isDarkMode ? "bg-secondary" : "bg-gray-50"

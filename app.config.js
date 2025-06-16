@@ -1,7 +1,7 @@
 
 const IS_DEV = process.env.APP_VARIANT === 'development';
 const IS_PREVIEW = process.env.APP_VARIANT === 'preview';
-const LOCAL_IP = 'http://192.168.0.101:3001'; // Replace with your actual machine IP if different
+const LOCAL_IP = 'http://localhost:3001'; // Replace with your actual machine IP if different
 const ORIGIN = IS_DEV
   ? LOCAL_IP
   : process.env.ORIGIN;
