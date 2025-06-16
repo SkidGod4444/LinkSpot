@@ -3,6 +3,9 @@ import { handle } from "hono/vercel";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import chat from "./routes/ai/chat";
+import clubs from "./routes/clubs";
+import users from "./routes/users";
+import events from "./routes/events";
 
 export const runtime = "edge";
 const app = new Hono().basePath("/v1");
@@ -22,6 +25,9 @@ app.use(
 app.use(logger());
 
 app.route("/ai/chat", chat);
+app.route("/clubs", clubs);
+app.route("/users", users);
+app.route("/events", events);
 
 const GET = handle(app);
 const POST = handle(app);
